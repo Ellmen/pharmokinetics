@@ -2,3 +2,5 @@
 
 # 2022-software-engineering-projects-pk
 starter pk modelling repository
+
+This is a sample for the PR demo
