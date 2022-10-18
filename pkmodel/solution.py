@@ -1,6 +1,7 @@
 #
 # Solution class
 #
+from scipy.integrate import solve_ivp as ODE_solver
 
 class Solution:
     """A Pharmokinetic (PK) model solution
