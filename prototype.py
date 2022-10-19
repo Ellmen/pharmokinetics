@@ -2,8 +2,12 @@ import matplotlib.pylab as plt
 import numpy as np
 import scipy.integrate
 
-def dose(t, X):
-    return X
+def dose(t, Xs):
+    dosage = 0
+    for X in Xs:
+        if t > X[0] and t < X[1]:
+            dosage += X[2]
+    return dosage
 
 def rhs(t, y, Q_p1, V_c, V_p1, CL, X):
     q_c, q_p1 = y
@@ -27,7 +31,7 @@ model2_args = {
     'V_c': 1.0,
     'V_p1': 1.0,
     'CL': 1.0,
-    'X': 1.0,
+    'Xs': [(1, 2, 1.0), [3, 4, 2.0]],
 }
 
 t_eval = np.linspace(0, 1, 1000)
