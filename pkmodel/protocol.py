@@ -2,15 +2,6 @@
 # Protocol class
 #
 
-
-class Dose:
-    def __init__(self, d_type='constant', rate=0, start=0, end=0):
-        self.d_type = d_type
-        self.rate = rate
-        self.start = start
-        self.end = end if d_type == 'constant' else self.start + 0.001
-
-
 class Protocol:
     """A Pharmokinetic (PK) protocol
 
@@ -29,22 +20,22 @@ class Protocol:
         Args:
             dosing_mode (_type_): "constant" or "spiked"
             rate (_type_): rate of drug administration, ignore if "spiked"
-            dosing_strategy (_type_): list of tuples specifying intervals 
-                between time and the dose administered -- TO SPECIFY LATER. 
+            dosing_strategy (_type_): list of tuples specifying intervals
+                between time and the dose administered -- TO SPECIFY LATER.
                 Ignore if dosing mode is "constant"
         """
         # self.dosing_mode = dosing_mode
         # self.rate = rate
         self.dosing_strategy = dosing_strategy
-    
+
     @property
     def dosing_mode(self):
         return self._dosing_mode
-    
+
     @dosing_mode.setter
     def dosing_mode(self, dosing_mode):
-    # Validate that the dosing mode provided is valid before setting; if not 
-    # raise error
+        # Validate that the dosing mode provided is valid before setting; if not
+        # raise error
         self._dosing_mode = dosing_mode
 
     # Implement similar validation using setters and getters for rate and
