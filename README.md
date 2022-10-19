@@ -1,4 +1,5 @@
 [![Python application](https://github.com/Ellmen/pharmokinetics/actions/workflows/python-app.yml/badge.svg)](https://github.com/Ellmen/pharmokinetics/actions/workflows/python-app.yml)
+[![codecov](https://codecov.io/github/Ellmen/pharmokinetics/branch/master/graph/badge.svg?token=JFMPK5650Q)](https://codecov.io/github/Ellmen/pharmokinetics)
 [![Documentation Status](https://readthedocs.org/projects/pharmokinetics/badge/?version=latest)](https://pharmokinetics.readthedocs.io/en/latest/?badge=latest)
 
 # 2022-software-engineering-projects-pk
