@@ -3,51 +3,52 @@
 #
 
 class Model:
-    # for i <= number_peripherals #with number_peripherals an integer float chosen by the user
-    
-    #     if chosen_model== intravenous_bolus
 
-    #     dq_c/dt=Dose(t) -q_c/V_c*CL-Q_{p1}*(q_c/V_c - q_{p1}/V_{p1})
-    #     d_{qp1}/dt=Q_{p1}*(q_c/V_c - q_{p1}/V_{p1})
-    #     #TODO: add code to include possibility for more than 1 peripheral compartment
-
-    #     elif chosen_model==subcutaneous
-
-    #     d_{q0}/dt=Dose(t)-k_a*q_0
-    #     dq_c/dt=k_aq*q_0-q_c/V_c*CL-Q_{p1}*(q_c/V_c - q_{p1}/V_{p1})
-    #     #TODO: add code to include possibility for more than 1 peripheral compartment
-    #     d_{qp1}/dt=Q_{p1}*(q_c/V_c - q_{p1}/V_{p1})
-        
-    
-    def __init__(self, dosing=None, peripherals=None, therapeutic_max=None, therapeutic_min=None):
+    def __init__(
+        self,
+        name="PK model",
+        dosing=None,
+        volume=1,
+        clearance_rate=1,
+        peripherals=None,
+        therapeutic_max=None,
+        therapeutic_min=None,
+        protocol=None,
+    ):
         """A Pharmacokinetic (PK) model
 
         Args:
             dosing (Compartment): _description_
+            volume (float): _description_
+            clearance_rate (float): _description_
             peripherals (Compartment): _description_
             therapeutic_max (float): _description_
             therapeutic_min (float): _description_
         """
+        self.name = name
         self.dosing = dosing
+        self.volume = volume
+        self.clearance_rate = clearance_rate
         self.peripherals = peripherals
         self.therapeutic_max = therapeutic_max
         self.therapeutic_min = therapeutic_min
-        
+        self.protocol = protocol  # TODO: passed to solver?
+
+
 class Compartment:
 
-    def __init__(self, type, rate, volume, quantity) -> None:
-        self.type = type
+    def __init__(self, c_type, rate, volume) -> None:
+        self.c_type = c_type  # Dosing or compartment
         self.rate = rate
         self.volume = volume
-        self.quantity = quantity
-    
+
     @property
     def volume(self):
         return self._volume
-    
+
     @volume.setter
     def volume(self, volume):
-        if self.type == "dosing":
+        if self.c_type == "dosing":
             self._volume = 0
         else:
             self._volume = volume

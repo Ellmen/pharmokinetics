@@ -10,6 +10,6 @@ class ProtocolTest(unittest.TestCase):
         """
         Tests Protocol creation.
         """
-        model = pk.Protocol()
-        self.assertEqual(model.value, 43)
+        p = pk.Protocol(dosing_strategy=[])
+        self.assertEqual(p.dosing_strategy, [])
 
