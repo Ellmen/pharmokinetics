@@ -4,7 +4,7 @@
 import matplotlib.pylab as plt
 import numpy as np
 import scipy.integrate
-# from scipy.integrate import solve_ivp as ODE_solver
+
 
 class Solution:
     """A Pharmokinetic (PK) model solution
@@ -19,8 +19,8 @@ class Solution:
     # def __init__(self, models, protocols, therapeutic_min, therapeutic_max):
     def __init__(self, models, therapeutic_min, therapeutic_max):
         self.models = models
-        self.therapeutic_min=1
-        self.therapeutic_max=3
+        self.therapeutic_min = therapeutic_min
+        self.therapeutic_max = therapeutic_max
         # self.protocols = protocols
         self.solutions = {}
 
@@ -43,8 +43,6 @@ class Solution:
         dqc_dt = self._dose(t, model.protocol) - q_c / model.volume * model.clearance_rate - sum(transitions)
         return [dqc_dt] + transitions
 
-    # Implement method that iterates over the permuations of models and 
-    # protocols and stores the solution
     def solve(self):
         # pass
         t_eval = np.linspace(0, 1, 1000)
@@ -59,7 +57,7 @@ class Solution:
             self.solutions[model.name] = sol
 
     def _make_plot(self):
-        fig = plt.figure()
+        fig = plt.figure() # noqa
         for model in self.models:
             sol = self.solutions[model.name]
             plt.plot(sol.t, sol.y[0, :], label=model.name + '- q_c')
