@@ -2,6 +2,15 @@
 # Protocol class
 #
 
+
+class Dose:
+    def __init__(self, d_type='constant', rate=0, start=0, end=0):
+        self.d_type = d_type
+        self.rate = rate
+        self.start = start
+        self.end = end if d_type == 'constant' else self.start + 0.001
+
+
 class Protocol:
     """A Pharmokinetic (PK) protocol
 
@@ -12,11 +21,9 @@ class Protocol:
         an example paramter
 
     """
-    
-    #    Dose(t)=Dose_initial+[Dose_pulsed if t/T_{interval}== int] + Dose_continuous*t
-    #    with all these Dose_ being set by the user and the if statement to make dosed injection possible
 
-    def __init__(self, dosing_mode, rate, dosing_strategy):
+    # def __init__(self, dosing_mode, rate, dosing_strategy):
+    def __init__(self, dosing_strategy):
         """A PK model
 
         Args:
@@ -26,8 +33,8 @@ class Protocol:
                 between time and the dose administered -- TO SPECIFY LATER. 
                 Ignore if dosing mode is "constant"
         """
-        self.dosing_mode = dosing_mode
-        self.rate = rate
+        # self.dosing_mode = dosing_mode
+        # self.rate = rate
         self.dosing_strategy = dosing_strategy
     
     @property
