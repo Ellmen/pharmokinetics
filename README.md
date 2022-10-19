@@ -7,3 +7,9 @@ This project describes drug delivery to a patient using a pharmacokinetic (pk) m
 
 Future extensions of this model may include incorporation of a pharmacodynamic (pd) model to describe the interactions of the drug with the body.
 
+## Installation
+
+```
+pip install -r requirements.txt
+pip install -e .
+```
