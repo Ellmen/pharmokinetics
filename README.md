@@ -1,4 +1,5 @@
 [![Python application](https://github.com/Ellmen/pharmokinetics/actions/workflows/python-app.yml/badge.svg)](https://github.com/Ellmen/pharmokinetics/actions/workflows/python-app.yml)
+[![Documentation Status](https://readthedocs.org/projects/pharmokinetics/badge/?version=latest)](https://pharmokinetics.readthedocs.io/en/latest/?badge=latest)
 
 # 2022-software-engineering-projects-pk
 By Isaac Ellmen (Ellmen), Leonard Lee (XX) & Raman van Wee (Ramanspec) on 21 Oct 2022
