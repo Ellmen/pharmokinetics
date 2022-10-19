@@ -10,6 +10,6 @@ class SolutionTest(unittest.TestCase):
         """
         Tests Solution creation.
         """
-        model = pk.Solution()
-        self.assertEqual(model.value, 44)
+        s = pk.Solution(models=[], therapeutic_min=0, therapeutic_max=1)
+        self.assertEqual(s.therapeutic_min, 0)
 
