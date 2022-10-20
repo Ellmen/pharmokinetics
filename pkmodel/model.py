@@ -15,15 +15,19 @@ class Model:
         therapeutic_min=None,
         protocol=None,
     ):
-        """A Pharmacokinetic (PK) model
+        """Defining the components of the (PK) model
 
         Args:
+            name (string): name of the model.
             dosing (Compartment): _description_
-            volume (float): _description_
-            clearance_rate (float): _description_
+            volume (float): the volume within a compartment
+            clearance_rate (float): rate at which drug is cleared from the central compartment
+                into the exterior [mL/h].
             peripherals (Compartment): _description_
-            therapeutic_max (float): _description_
-            therapeutic_min (float): _description_
+            therapeutic_min (float): the minimally required drug in a compartment
+                for the drug to be effective.
+            therapeutic_max (float): the maximally permited mass of drug in a
+                compartment before it becomes toxic. 
         """
         self.name = name
         self.dosing = dosing
