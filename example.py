@@ -9,8 +9,6 @@ c2 = Compartment(c_type="peripheral", rate=2.0, volume=1.0)
 
 
 d1 = Dose(rate=6, start=0, end=1)
-# d2 = Dose(rate=4000, start=0, end=0.001)
-# d3 = Dose(rate=2000, start=0.5, end=0.501)
 d2 = SpikeDose(volume=4, start=0)
 d3 = SpikeDose(volume=2, start=0.5)
 p1 = Protocol(dosing_strategy=[d1])

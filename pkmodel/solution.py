@@ -45,14 +45,16 @@ class Solution:
 
     def solve(self):
         # pass
-        t_eval = np.linspace(0, 1, 1000)
+        t_eval = np.linspace(0, 1, 10000)
 
         for model in self.models:
             y0 = np.array([0.0] + [0.0 for _ in model.peripherals])
             sol = scipy.integrate.solve_ivp(
                 fun=lambda t, y: self._rhs(t, y, model),
                 t_span=[t_eval[0], t_eval[-1]],
-                y0=y0, t_eval=t_eval
+                y0=y0,
+                t_eval=t_eval,
+                max_step=0.001,
             )
             self.solutions[model.name] = sol
 
