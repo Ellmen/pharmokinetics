@@ -6,6 +6,9 @@ __pycache__/
 # vim
 .vim/
 
+# vscode
+.vscode/
+
 # C extensions
 *.so
 

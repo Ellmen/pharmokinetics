@@ -5,7 +5,7 @@
 class Compartment:
 
     def __init__(self, c_type, rate, volume) -> None:
-        self.c_type = c_type  # Dosing or compartment
+        self.c_type = c_type  # Dosing or peripheral
         self.rate = rate
         self.volume = volume
 
@@ -17,5 +17,7 @@ class Compartment:
     def volume(self, volume):
         if self.c_type == "dosing":
             self._volume = 0
-        else:
+        elif self.c_type == "peripheral":
             self._volume = volume
+        else:
+            raise ValueError("'c_type' must be 'dosing' or 'peripheral'")
