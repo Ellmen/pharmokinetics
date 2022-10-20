@@ -50,7 +50,7 @@ class SolutionTest(unittest.TestCase):
             # TODO: test for correctness
             self.assertEqual(len(y0), len(rhs))
 
-    def solve(self):
+    def test_solve(self):
         s = pk.Solution(models=self.models, therapeutic_min=1, therapeutic_max=3)
         self.assertEqual(s.solutions, {})
         s.solve()
