@@ -17,10 +17,10 @@ class ProtocolTest(unittest.TestCase):
     def test_invalid_protocols(self):
         with self.assertRaises(TypeError):
             pk.Protocol("dose")
-        with self.assertRaises(KeyError):
+        with self.assertRaises(TypeError):
+            pk.Protocol(["dose"])
+        with self.assertRaises(ValueError):
             pk.Protocol(dosing_strategy=[])
-            pk.Protocol([pk.Dose(4), pk.Dose(5)])
-            pk.Protocol([pk.Dose(5), pk.SpikeDose(5, 8)])
 
 if __name__ == "__main__":
     unittest.main()
