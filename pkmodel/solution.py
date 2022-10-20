@@ -60,16 +60,21 @@ class Solution:
         fig = plt.figure() # noqa
         for model in self.models:
             sol = self.solutions[model.name]
-            plt.plot(sol.t, sol.y[0, :], label=model.name + '- q_c')
+            plt.plot(sol.t, sol.y[0, :], label=model.name + '- $q_c$')
             # plt.plot(sol.t, sol.y[1, :], label=model.name + '- q_p1')
             for i in range(1, sol.y.shape[0]):
                 plt.plot(sol.t, sol.y[i, :], label=model.name + '- q_p{}'.format(i))
             # if np.max(sol.y) > self.therapeutic_max:
             #     print('Drug concentration of ' + model['name'] + ' exceeds toxic threshold, use lighter dosing')
-        [plt.axhline(y=i, linestyle='--') for i in [self.therapeutic_min, self.therapeutic_max]]
-        plt.legend()
+        [plt.axhline(y=i, linestyle='--', color ='k') for i in [self.therapeutic_min, self.therapeutic_max]]
+        plt.plot([],[],linestyle='--', color='k',label='Therapeutic Window')
+        plt.fill_between(t_eval,therapeutic_min, therapeutic_max, color='green', alpha=0.3)
+        plt.xlim(0,max(t_eval))
+        plt.ylim(bottom=0)
+        plt.legend(loc='upper right')
         plt.ylabel('drug mass [ng]')
         plt.xlabel('time [h]')
+        plt.title('Drug mass over time')
         return plt
 
     # Implement method that plots the solutions via matplotlib
@@ -80,4 +85,4 @@ class Solution:
     # Implement method that saves the plots to a specified file path
     def save_plot(self, filepath='pkmodel_plot.png'):
         plt = self._make_plot()
-        plt.savefig(filepath)
+        plt.savefig(filepath, dpi=1000)
