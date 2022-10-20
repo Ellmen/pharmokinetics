@@ -13,3 +13,5 @@ class SolutionTest(unittest.TestCase):
         s = pk.Solution(models=[], therapeutic_min=0, therapeutic_max=1)
         self.assertEqual(s.therapeutic_min, 0)
 
+if __name__ == "__main__":
+    unittest.main()

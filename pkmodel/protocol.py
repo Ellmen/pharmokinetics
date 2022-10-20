@@ -20,7 +20,9 @@ class Protocol:
 
     @dosing_strategy.setter
     def dosing_strategy(self, dosing_strategy):
-        if not isinstance(dosing_strategy, list) or len(dosing_strategy) == 0:
+        if len(dosing_strategy) == 0:
+            raise KeyError("A dosing strategy must be specified")
+        if not isinstance(dosing_strategy, list):
             raise TypeError("Dosing strategy must be list of Dose objects.")
         if len(dosing_strategy) == 1:
             if not isinstance(dose, Dose):
