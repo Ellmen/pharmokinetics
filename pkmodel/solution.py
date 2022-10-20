@@ -7,17 +7,18 @@ import scipy.integrate
 
 
 class Solution:
-    """A Pharmokinetic (PK) model solution
-
-    Parameters
-    ----------
-
-    value: numeric, optional
-        an example paramter
-
-    """
     # def __init__(self, models, protocols, therapeutic_min, therapeutic_max):
     def __init__(self, models, therapeutic_min, therapeutic_max):
+    """Defining the system of differential equations and then 
+        solving them and plotting them.
+        
+     Args:
+         models TODO I am not sure what to write here
+         therapeutic_min (float): the minimally required drug in a compartment
+            for the drug to be effective.
+         therapeutic_max (float): the maximally permited mass of drug in a
+            compartment before it becomes toxic.        
+    """
         self.models = models
         self.therapeutic_min = therapeutic_min
         self.therapeutic_max = therapeutic_max
@@ -25,6 +26,12 @@ class Solution:
         self.solutions = {}
 
     def _dose(self, t, protocol):
+    """Applying the dose & protocol that are specified in their respective classes.
+        
+     Args:
+         t (float): timepoint at which the model is currently at.
+         protocol (class): TODO add/check this   
+    """
         dosage = 0
         for dose in protocol.dosing_strategy:
             if t > dose.start and t < dose.end:
@@ -32,6 +39,13 @@ class Solution:
         return dosage
 
     def _rhs(self, t, y, model):
+    """Defining the differential equations of the model.
+        
+     Args:
+         t (float): timepoint at which the model is currently at.
+         y () TODO add/check this
+         model (class): TODO add/check this   
+    """
         q_c, *q_ps = y
         transitions = []
         for i in range(len(model.peripherals)):
@@ -44,6 +58,8 @@ class Solution:
         return [dqc_dt] + transitions
 
     def solve(self):
+    """Finding the mass in each compartment by solving the differential equations.
+    """
         # pass
         t_eval = np.linspace(0, 1, 1000)
 
@@ -57,6 +73,8 @@ class Solution:
             self.solutions[model.name] = sol
 
     def _make_plot(self):
+    """Constructing a single graph showing the mass of drug  the dose & protocol that are specified in their respective classes.    
+    """
         fig = plt.figure() # noqa
         for model in self.models:
             sol = self.solutions[model.name]
@@ -74,10 +92,14 @@ class Solution:
 
     # Implement method that plots the solutions via matplotlib
     def plot(self):
+    """Plotting the graph constructed in make_plot.    
+    """
         plt = self._make_plot()
         plt.show()
 
     # Implement method that saves the plots to a specified file path
     def save_plot(self, filepath='pkmodel_plot.png'):
+    """Saving the plot constructed in make_plot.    
+    """
         plt = self._make_plot()
         plt.savefig(filepath)
