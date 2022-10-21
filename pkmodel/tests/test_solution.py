@@ -21,8 +21,9 @@ class SolutionTest(unittest.TestCase):
 
         m1 = pk.Model(name='model1', volume=1.0, clearance_rate=1.0, peripherals=[c1], protocol=p1)
         m2 = pk.Model(name='model2', volume=1.0, clearance_rate=1.0, peripherals=[c1, c2], protocol=p2)
+        m3 = pk.Model(name='model3', dosing_rate=1.5, volume=1.0, clearance_rate=1.0, peripherals=[c1], protocol=p1)
 
-        self.models = [m1, m2]
+        self.models = [m1, m2, m3]
 
         # s.solve()
         # s.plot()

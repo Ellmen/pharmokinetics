@@ -17,9 +17,10 @@ p1 = Protocol(dosing_strategy=[d1])
 p2 = Protocol(dosing_strategy=[d2,d3])
 
 m1 = Model(name='model1', volume=1.0, clearance_rate=1.0, peripherals=[c1], protocol=p1)
-m2 = Model(name='model2', dosing_rate = 1.0, volume=1.0, clearance_rate=1.0, peripherals=[c1, c2], protocol=p2)
+m2 = Model(name='model2', volume=1.0, clearance_rate=1.0, peripherals=[c1, c2], protocol=p2)
+m3 = Model(name='model3', dosing_rate=5, volume=1.0, clearance_rate=1.0, peripherals=[c1], protocol=p2)
 
-models = [m1, m2]
+models = [m1, m2, m3]
 s = Solution(models=models, therapeutic_min=1, therapeutic_max=3)
 
 s.solve()
