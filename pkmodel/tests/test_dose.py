@@ -22,6 +22,3 @@ class TestDoses(unittest.TestCase):
         self.assertEqual(d.start, 3)
         self.assertEqual(d.end, 3.01)
         self.assertEqual(d.rate, 500)
-
-if __name__ == "__main__":
-    unittest.main()

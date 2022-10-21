@@ -21,6 +21,3 @@ class ProtocolTest(unittest.TestCase):
             pk.Protocol(["dose"])
         with self.assertRaises(ValueError):
             pk.Protocol(dosing_strategy=[])
-
-if __name__ == "__main__":
-    unittest.main()
