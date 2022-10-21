@@ -19,7 +19,7 @@ m2 = Model(name='model2', volume=1.0, clearance_rate=1.0, peripherals=[c1, c2], 
 m3 = Model(name='model3', dosing_rate=5, volume=1.0, clearance_rate=1.0, peripherals=[c1], protocol=p2)
 
 models = [m1, m2, m3]
-s = Solution(models=models, therapeutic_min=1, therapeutic_max=3)
+s = Solution(models=models, therapeutic_min=1, therapeutic_max=3, time=1.5)
 
 s.solve()
 s.plot()

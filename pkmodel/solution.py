@@ -15,7 +15,8 @@ class Solution:
         self,
         models: List[Model],
         therapeutic_min: float = None,
-        therapeutic_max: float = None
+        therapeutic_max: float = None,
+        time: float = 1
     ):
         """A collection of PK models and methods required to model and plot
         their behaviour.
@@ -28,11 +29,15 @@ class Solution:
         :param therapeutic_min: the lower limit of the therapeutic window, 
             defaults to None
         :type therapeutic_min: float, optional
+        :param time: timeframe (h) over which the models should be solved for, 
+            defaults to 1
+        :type time: float, optional
         """
         self.models = models
         self.therapeutic_min = therapeutic_min
         self.therapeutic_max = therapeutic_max
         self.solutions = {}
+        self.time = round(time, 2)
 
     def _dose(self, t, protocol):
         dosage = 0
@@ -61,7 +66,7 @@ class Solution:
     def solve(self):
         """Solve the differential equations required to model the systems.
         """
-        t_eval = np.linspace(0, 1, 10000)
+        t_eval = np.linspace(0, self.time, int(self.time * 10000))
 
         for model in self.models:
             y0 = np.array([0.0, 0.0] + [0.0 for _ in model.peripherals])
