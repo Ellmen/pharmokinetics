@@ -6,13 +6,13 @@ from typing import List
 from pkmodel.dose import Dose, SpikeDose
 
 class Protocol:
-    def __init__(self, dosing_strategy: List[Dose]):
-        """A Pharmacokinetic protocol describing the doses to be administered.
+    """A Pharmacokinetic protocol describing the doses to be administered.
 
-        Args:
-            dosing_strategy (list[Dose]): list of Dose objects describing the
-                dosing strategy
-        """
+    Args:
+        dosing_strategy (list[Dose]): list of Dose objects describing the
+            dosing strategy
+    """
+    def __init__(self, dosing_strategy: List[Dose]):
         self.dosing_strategy = dosing_strategy
         if not isinstance(dosing_strategy, list):
             raise TypeError("Dosing strategy must be list of Dose objects.")
