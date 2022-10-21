@@ -8,6 +8,3 @@ class CompartmentTest(unittest.TestCase):
         c = pk.Compartment(5, 5)
         self.assertEqual(c.rate, 5)
         self.assertEqual(c.volume, 5)
-
-if __name__ == "__main__":
-    unittest.main()

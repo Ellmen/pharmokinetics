@@ -1,4 +1,5 @@
 import unittest
+from unittest.mock import patch
 import numpy as np
 import pkmodel as pk
 
@@ -55,8 +56,42 @@ class SolutionTest(unittest.TestCase):
         s = pk.Solution(models=self.models, therapeutic_min=1, therapeutic_max=3)
         self.assertEqual(s.solutions, {})
         s.solve()
-        # TODO: test for correctness
         self.assertEqual(set(s.solutions.keys()), set([m.name for m in s.models]))
+        # Find a time just before and after the second spike in model2
+        t = 0.5
+        delta = 0.02
+        i, j = 0, 0
+        sol2 = s.solutions['model2']
+        while sol2.t[i] < t - delta:
+            i += 1
+        while sol2.t[j] < t + delta:
+            j += 1
+        # Check that the second spike was administered
+        self.assertGreater(sol2.y[1, j], sol2.y[1, i])
 
-if __name__ == "__main__":
-    unittest.main()
+    # @patch('matplotlib.ClassName1')
+    def test_make_plot(self):
+        s = pk.Solution(models=self.models, therapeutic_min=1, therapeutic_max=3)
+        with self.assertRaises(ValueError):
+            s._make_plot()
+        s.solve()
+        plt = s._make_plot()
+        ax = plt.gca()
+        # plot should have 10 lines: 8 curves and 2 showing the upper and lower bounds
+        self.assertEqual(len(ax.lines), 10)
+
+    @patch('matplotlib.pylab.show')
+    def test_plot(self, show):
+        s = pk.Solution(models=self.models, therapeutic_min=1, therapeutic_max=3)
+        s.solve()
+        s.plot()
+        assert show.called
+
+    @patch('matplotlib.pylab.savefig')
+    def test_save_plot(self, save):
+        s = pk.Solution(models=self.models, therapeutic_min=1, therapeutic_max=3)
+        s.solve()
+        s.save_plot('test.png')
+        save.assert_called_with('test.png')
+
+
