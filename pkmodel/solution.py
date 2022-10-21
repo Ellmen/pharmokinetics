@@ -89,7 +89,7 @@ class Solution:
                 plt.plot(sol.t, sol.y[0, :], label=model.name + ' - $q_0$')
             plt.plot(sol.t, sol.y[1, :], label=model.name + ' - $q_c$')
             for i in range(2, sol.y.shape[0]):
-                plt.plot(sol.t, sol.y[i, :], label=model.name + ' - $q_p{}$'.format(i - 1))
+                plt.plot(sol.t, sol.y[i, :], label=model.name + ' - $q_{{p{}}}$'.format(i - 1))
         [plt.axhline(y=i, linestyle='--', alpha=0.2) for i in [self.therapeutic_min, self.therapeutic_max] if i is not None]
         plt.ylabel('drug mass [ng]')
         plt.xlabel('time [h]')
