@@ -19,11 +19,11 @@ class Solution:
              therapeutic_max (float): the maximally permited mass of drug in a
                 compartment before it becomes toxic.        
         """
-            self.models = models
-            self.therapeutic_min = therapeutic_min
-            self.therapeutic_max = therapeutic_max
-            # self.protocols = protocols
-            self.solutions = {}
+        self.models = models
+        self.therapeutic_min = therapeutic_min
+        self.therapeutic_max = therapeutic_max
+        # self.protocols = protocols
+        self.solutions = {}
 
     def _dose(self, t, protocol):
         """Applying the dose & protocol that are specified in their respective classes.
