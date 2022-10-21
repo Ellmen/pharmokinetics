@@ -80,18 +80,22 @@ class Solution:
             self.solutions[model.name] = sol
 
     def _make_plot(self):
-        fig = plt.figure() # noqa
+        fig = plt.figure(figsize=(8, 6)) # noqa
         for model in self.models:
             sol = self.solutions[model.name]
             if model.dosing_rate is not None:
-                plt.plot(sol.t, sol.y[0, :], label=model.name + '- q_0')
-            plt.plot(sol.t, sol.y[1, :], label=model.name + '- q_c')
+                plt.plot(sol.t, sol.y[0, :], label=model.name + ' - $q_0$')
+            plt.plot(sol.t, sol.y[1, :], label=model.name + ' - $q_c$')
             for i in range(2, sol.y.shape[0]):
-                plt.plot(sol.t, sol.y[i, :], label=model.name + '- q_p{}'.format(i - 1))
-        [plt.axhline(y=i, linestyle='--') for i in [self.therapeutic_min, self.therapeutic_max] if i is not None]
-        plt.legend()
+                plt.plot(sol.t, sol.y[i, :], label=model.name + ' - $q_p{}$'.format(i - 1))
+        [plt.axhline(y=i, linestyle='--', alpha=0.2) for i in [self.therapeutic_min, self.therapeutic_max] if i is not None]
         plt.ylabel('drug mass [ng]')
         plt.xlabel('time [h]')
+        plt.xlim(0, self.time)
+        plt.ylim(bottom=0)
+        if self.therapeutic_max is not None and self.therapeutic_min is not None:
+            plt.fill_between([0, self.time], self.therapeutic_max, self.therapeutic_min, color="lime", alpha= 0.1)
+        plt.legend(loc="upper right")
         return plt
 
     def plot(self):
