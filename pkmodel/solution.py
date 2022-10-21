@@ -83,8 +83,6 @@ class Solution:
             plt.plot(sol.t, sol.y[1, :], label=model.name + '- q_c')
             for i in range(2, sol.y.shape[0]):
                 plt.plot(sol.t, sol.y[i, :], label=model.name + '- q_p{}'.format(i - 1))
-            # if np.max(sol.y) > self.therapeutic_max:
-            #     print('Drug conceJntration of ' + model['name'] + ' exceeds toxic threshold, use lighter dosing')
         [plt.axhline(y=i, linestyle='--') for i in [self.therapeutic_min, self.therapeutic_max] if i is not None]
         plt.legend()
         plt.ylabel('drug mass [ng]')
