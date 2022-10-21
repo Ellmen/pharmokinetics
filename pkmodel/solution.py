@@ -10,7 +10,21 @@ from pkmodel.model import Model
 
 
 class Solution:
+    """A collection of PK models and methods required to model and plot
+    their behaviour.
 
+    :param models: a list of PK models to compare and solve
+    :type models: _type_
+    :param therapeutic_max: the upper limit of the therapeutic window, 
+        defaults to None
+    :type therapeutic_max: float, optional
+    :param therapeutic_min: the lower limit of the therapeutic window, 
+        defaults to None
+    :type therapeutic_min: float, optional
+    :param time: timeframe (h) over which the models should be solved for, 
+        defaults to 1
+    :type time: float, optional
+    """
     def __init__(
         self,
         models: List[Model],
@@ -18,21 +32,6 @@ class Solution:
         therapeutic_max: float = None,
         time: float = 1
     ):
-        """A collection of PK models and methods required to model and plot
-        their behaviour.
-
-        :param models: a list of PK models to compare and solve
-        :type models: _type_
-        :param therapeutic_max: the upper limit of the therapeutic window, 
-            defaults to None
-        :type therapeutic_max: float, optional
-        :param therapeutic_min: the lower limit of the therapeutic window, 
-            defaults to None
-        :type therapeutic_min: float, optional
-        :param time: timeframe (h) over which the models should be solved for, 
-            defaults to 1
-        :type time: float, optional
-        """
         self.models = models
         self.therapeutic_min = therapeutic_min
         self.therapeutic_max = therapeutic_max
