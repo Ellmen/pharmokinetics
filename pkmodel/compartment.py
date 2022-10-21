@@ -10,15 +10,15 @@ class Compartment:
             c_type (TODO): Compartment type: Dosing or peripheral compartment.
             rate (float): Flow rate of drug between two compartments.
             volume (float): Volume (mL) inside a compartment.
-    """
-        self.c_type = c_type  # Dosing or peripheral
-        self.rate = rate
-        self.volume = volume
+        """
+            self.c_type = c_type  # Dosing or peripheral
+            self.rate = rate
+            self.volume = volume
 
     @property
     def volume(self):
         """TODO
-    """
+        """
         return self._volume
 
     @volume.setter
