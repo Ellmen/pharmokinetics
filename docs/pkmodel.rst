@@ -12,6 +12,22 @@ Subpackages
 Submodules
 ----------
 
+pkmodel.compartment module
+--------------------------
+
+.. automodule:: pkmodel.compartment
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+pkmodel.dose module
+-------------------
+
+.. automodule:: pkmodel.dose
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 pkmodel.model module
 --------------------
 

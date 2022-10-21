@@ -80,6 +80,8 @@ class Solution:
             self.solutions[model.name] = sol
 
     def _make_plot(self):
+        if self.solutions == {}:
+            raise ValueError("Must run s.solve() before plotting solutions")
         fig = plt.figure(figsize=(8, 6)) # noqa
         for model in self.models:
             sol = self.solutions[model.name]

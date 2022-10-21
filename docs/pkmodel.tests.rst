@@ -4,6 +4,22 @@ pkmodel.tests package
 Submodules
 ----------
 
+pkmodel.tests.test\_compartment module
+--------------------------------------
+
+.. automodule:: pkmodel.tests.test_compartment
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+pkmodel.tests.test\_dose module
+-------------------------------
+
+.. automodule:: pkmodel.tests.test_dose
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 pkmodel.tests.test\_model module
 --------------------------------
 

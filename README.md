@@ -17,21 +17,22 @@ pip install -e .
 from pkmodel import Compartment, Dose, SpikeDose, Model, Protocol, Solution
 
 
-c1 = Compartment(c_type="peripheral", rate=1.0, volume=1.0)
-c2 = Compartment(c_type="peripheral", rate=2.0, volume=1.0)
+c1 = Compartment(rate=1.0, volume=1.0)
+c2 = Compartment(rate=2.0, volume=1.0)
 
 
 d1 = Dose(rate=6, start=0, end=1)
 d2 = SpikeDose(volume=4, start=0)
 d3 = SpikeDose(volume=2, start=0.5)
+d4 = SpikeDose(volume=2, start=1.0)
 p1 = Protocol(dosing_strategy=[d1])
-p2 = Protocol(dosing_strategy=[d2,d3])
+p2 = Protocol(dosing_strategy=[d2,d3,d4])
 
-m1 = Model(name='model1', volume=1.0, clearance_rate=1.0, peripherals=[c1], protocol=p1)
-m2 = Model(name='model2', volume=1.0, clearance_rate=1.0, peripherals=[c1, c2], protocol=p2)
+m1 = Model(name='model1', volume=1.0, clearance_rate=1.0, peripherals=[c1, c2], protocol=p1)
+m2 = Model(name='model2', dosing_rate=5, volume=1.0, clearance_rate=1.0, peripherals=[c1], protocol=p2)
 
 models = [m1, m2]
-s = Solution(models=models, therapeutic_min=1, therapeutic_max=3)
+s = Solution(models=models, therapeutic_min=1, therapeutic_max=3, time=1.5)
 
 s.solve()
 s.plot()
@@ -76,9 +77,7 @@ where $q_0$, $q_c$ & $q_i$ are the the masses of the drug in the initial, the ce
 
 The model consists of three classes: (1) [Model](https://github.com/Ellmen/pharmokinetics/blob/master/pkmodel/model.py) to define the method of drug administration used (intravenous bolus or subcateneous) and the number of peripheral components (0 or more), (2) [Protocol](https://github.com/Ellmen/pharmokinetics/blob/master/pkmodel/protocol.py) to specify the dosing protocol (continuous or instaneous), and (3) [Solution](https://github.com/Ellmen/pharmokinetics/blob/master/pkmodel/solution.py) to solve the resulting system of differential equations and generate plots. The used model and protocol can be chosen independently and compared, see example plot below.
 
-![image](https://user-images.githubusercontent.com/115243223/196722164-fa55ceed-6599-4c8f-8a1d-b725d6d1c263.png)
-
-#TODO: update figure with eventual plot
+![image](https://user-images.githubusercontent.com/108174721/197208944-d6fdeea2-ba12-4191-9b1c-32ed0ff32c97.png)
 
 ## Roadmap
 Future extensions of this model may include incorporation of a pharmacodynamic (pd) model to describe the varying interactions of different drugs with the body. Moreover, the drug administration protocol may be made dependent on current drug levels in the body to facilitated automated administration.

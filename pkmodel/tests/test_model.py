@@ -13,6 +13,3 @@ class ModelTest(unittest.TestCase):
         """
         m = pk.Model(name="PK model", volume=1, clearance_rate=1, protocol=Mock())
         self.assertEqual(m.name, "PK model")
-
-if __name__ == "__main__":
-    unittest.main()
