@@ -35,7 +35,7 @@ s = Solution(models=models, therapeutic_min=1, therapeutic_max=3)
 
 s.solve()
 s.plot()
-# s.save_plot()
+s.save_plot()
 ```
 ## Project Description
 
