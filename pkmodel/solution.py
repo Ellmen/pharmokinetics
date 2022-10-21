@@ -53,7 +53,7 @@ class Solution:
         t_eval = np.linspace(0, 1, 1000)
 
         for model in self.models:
-            y0 = np.array([0.0] + [0.0 for _ in range(len(model.peripherals) + 1)])
+            y0 = np.array([0.0, 0.0] + [0.0 for _ in model.peripherals])
             sol = scipy.integrate.solve_ivp(
                 fun=lambda t, y: self._rhs(t, y, model),
                 t_span=[t_eval[0], t_eval[-1]],

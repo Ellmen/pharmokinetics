@@ -46,7 +46,7 @@ class SolutionTest(unittest.TestCase):
     def test_rhs(self):
         s = pk.Solution(models=self.models, therapeutic_min=1, therapeutic_max=3)
         for model in s.models:
-            y0 = np.array([0.0] + [0.0 for _ in range(len(model.peripherals) + 1)])
+            y0 = np.array([0.0, 0.0] + [0.0 for _ in model.peripherals])
             rhs = s._rhs(0.5, y0, model)
             # TODO: test for correctness
             self.assertEqual(len(y0), len(rhs))
