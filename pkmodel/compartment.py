@@ -11,9 +11,9 @@ class Compartment:
             rate (float): Flow rate of drug between two compartments.
             volume (float): Volume (mL) inside a compartment.
         """
-            self.c_type = c_type  # Dosing or peripheral
-            self.rate = rate
-            self.volume = volume
+        self.c_type = c_type  # Dosing or peripheral
+        self.rate = rate
+        self.volume = volume
 
     @property
     def volume(self):
