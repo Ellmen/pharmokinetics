@@ -32,23 +32,28 @@ class Solution:
         return dosage
 
     def _rhs(self, t, y, model):
-        q_c, *q_ps = y
+        q_0, q_c, *q_ps = y
         transitions = []
         for i in range(len(model.peripherals)):
             p = model.peripherals[i]
             q_p = q_ps[i]
             transition = p.rate * (q_c / model.volume - q_p / p.volume)
             transitions.append(transition)
+        if model.dosing_rate is not None:
+            dqc_dt = model.dosing_rate * q_0 - q_c / model.volume * model.clearance_rate - sum(transitions)
+            dq0_dt = self._dose(t, model.protocol) - model.dosing_rate * q_0
+        else:
+            dqc_dt = self._dose(t, model.protocol) - q_c / model.volume * model.clearance_rate - sum(transitions)
+            dq0_dt = 0
 
-        dqc_dt = self._dose(t, model.protocol) - q_c / model.volume * model.clearance_rate - sum(transitions)
-        return [dqc_dt] + transitions
+        return [dq0_dt, dqc_dt] + transitions
 
     def solve(self):
         # pass
         t_eval = np.linspace(0, 1, 10000)
 
         for model in self.models:
-            y0 = np.array([0.0] + [0.0 for _ in model.peripherals])
+            y0 = np.array([0.0, 0.0] + [0.0 for _ in model.peripherals])
             sol = scipy.integrate.solve_ivp(
                 fun=lambda t, y: self._rhs(t, y, model),
                 t_span=[t_eval[0], t_eval[-1]],
@@ -62,10 +67,12 @@ class Solution:
         fig = plt.figure() # noqa
         for model in self.models:
             sol = self.solutions[model.name]
-            plt.plot(sol.t, sol.y[0, :], label=model.name + '- q_c')
+            if model.dosing_rate is not None:
+                plt.plot(sol.t, sol.y[0, :], label=model.name + '- q_0')
+            plt.plot(sol.t, sol.y[1, :], label=model.name + '- q_c')
             # plt.plot(sol.t, sol.y[1, :], label=model.name + '- q_p1')
-            for i in range(1, sol.y.shape[0]):
-                plt.plot(sol.t, sol.y[i, :], label=model.name + '- q_p{}'.format(i))
+            for i in range(2, sol.y.shape[0]):
+                plt.plot(sol.t, sol.y[i, :], label=model.name + '- q_p{}'.format(i - 1))
             # if np.max(sol.y) > self.therapeutic_max:
             #     print('Drug concentration of ' + model['name'] + ' exceeds toxic threshold, use lighter dosing')
         [plt.axhline(y=i, linestyle='--') for i in [self.therapeutic_min, self.therapeutic_max]]

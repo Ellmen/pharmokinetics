@@ -7,7 +7,7 @@ class Model:
     def __init__(
         self,
         name="PK model",
-        dosing=None,
+        dosing_rate=None,
         volume=1,
         clearance_rate=1,
         peripherals=None,
@@ -18,7 +18,7 @@ class Model:
         """A Pharmacokinetic (PK) model
 
         Args:
-            dosing (Compartment): _description_
+            dosing_rate (float): _description_
             volume (float): _description_
             clearance_rate (float): _description_
             peripherals (Compartment): _description_
@@ -26,7 +26,7 @@ class Model:
             therapeutic_min (float): _description_
         """
         self.name = name
-        self.dosing = dosing
+        self.dosing_rate = dosing_rate
         self.volume = volume
         self.clearance_rate = clearance_rate
         self.peripherals = peripherals
