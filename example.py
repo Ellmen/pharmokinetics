@@ -11,15 +11,15 @@ c2 = Compartment(rate=2.0, volume=1.0)
 d1 = Dose(rate=6, start=0, end=1)
 d2 = SpikeDose(volume=4, start=0)
 d3 = SpikeDose(volume=2, start=0.5)
+d4 = SpikeDose(volume=2, start=1.0)
 p1 = Protocol(dosing_strategy=[d1])
-p2 = Protocol(dosing_strategy=[d2,d3])
+p2 = Protocol(dosing_strategy=[d2,d3,d4])
 
-m1 = Model(name='model1', volume=1.0, clearance_rate=1.0, peripherals=[c1], protocol=p1)
-m2 = Model(name='model2', volume=1.0, clearance_rate=1.0, peripherals=[c1, c2], protocol=p2)
-m3 = Model(name='model3', dosing_rate=5, volume=1.0, clearance_rate=1.0, peripherals=[c1], protocol=p2)
+m1 = Model(name='model1', volume=1.0, clearance_rate=1.0, peripherals=[c1, c2], protocol=p1)
+m2 = Model(name='model2', dosing_rate=5, volume=1.0, clearance_rate=1.0, peripherals=[c1], protocol=p2)
 
-models = [m1, m2, m3]
-s = Solution(models=models, therapeutic_min=1, therapeutic_max=3)
+models = [m1, m2]
+s = Solution(models=models, therapeutic_min=1, therapeutic_max=3, time=1.5)
 
 s.solve()
 s.plot()

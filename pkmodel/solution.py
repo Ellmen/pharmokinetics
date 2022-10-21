@@ -15,7 +15,8 @@ class Solution:
         self,
         models: List[Model],
         therapeutic_min: float = None,
-        therapeutic_max: float = None
+        therapeutic_max: float = None,
+        time: float = 1
     ):
         """A collection of PK models and methods required to model and plot
         their behaviour.
@@ -28,11 +29,15 @@ class Solution:
         :param therapeutic_min: the lower limit of the therapeutic window, 
             defaults to None
         :type therapeutic_min: float, optional
+        :param time: timeframe (h) over which the models should be solved for, 
+            defaults to 1
+        :type time: float, optional
         """
         self.models = models
         self.therapeutic_min = therapeutic_min
         self.therapeutic_max = therapeutic_max
         self.solutions = {}
+        self.time = round(time, 2)
 
     def _dose(self, t, protocol):
         dosage = 0
@@ -61,7 +66,7 @@ class Solution:
     def solve(self):
         """Solve the differential equations required to model the systems.
         """
-        t_eval = np.linspace(0, 1, 10000)
+        t_eval = np.linspace(0, self.time, int(self.time * 10000))
 
         for model in self.models:
             y0 = np.array([0.0, 0.0] + [0.0 for _ in model.peripherals])
@@ -77,18 +82,22 @@ class Solution:
     def _make_plot(self):
         if self.solutions == {}:
             raise ValueError("Must run s.solve() before plotting solutions")
-        fig = plt.figure() # noqa
+        fig = plt.figure(figsize=(8, 6)) # noqa
         for model in self.models:
             sol = self.solutions[model.name]
             if model.dosing_rate is not None:
-                plt.plot(sol.t, sol.y[0, :], label=model.name + '- q_0')
-            plt.plot(sol.t, sol.y[1, :], label=model.name + '- q_c')
+                plt.plot(sol.t, sol.y[0, :], label=model.name + ' - $q_0$')
+            plt.plot(sol.t, sol.y[1, :], label=model.name + ' - $q_c$')
             for i in range(2, sol.y.shape[0]):
-                plt.plot(sol.t, sol.y[i, :], label=model.name + '- q_p{}'.format(i - 1))
-        [plt.axhline(y=i, linestyle='--') for i in [self.therapeutic_min, self.therapeutic_max] if i is not None]
-        plt.legend()
+                plt.plot(sol.t, sol.y[i, :], label=model.name + ' - $q_p{}$'.format(i - 1))
+        [plt.axhline(y=i, linestyle='--', alpha=0.2) for i in [self.therapeutic_min, self.therapeutic_max] if i is not None]
         plt.ylabel('drug mass [ng]')
         plt.xlabel('time [h]')
+        plt.xlim(0, self.time)
+        plt.ylim(bottom=0)
+        if self.therapeutic_max is not None and self.therapeutic_min is not None:
+            plt.fill_between([0, self.time], self.therapeutic_max, self.therapeutic_min, color="lime", alpha= 0.1)
+        plt.legend(loc="upper right")
         return plt
 
     def plot(self):
