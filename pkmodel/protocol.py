@@ -2,15 +2,16 @@
 # Protocol class
 #
 
+from typing import List
 from pkmodel.dose import Dose, SpikeDose
 
 class Protocol:
-    def __init__(self, dosing_strategy):
-        """A Pharmacokinetic protocol of doses
+    def __init__(self, dosing_strategy: List[Dose]):
+        """A Pharmacokinetic protocol describing the doses to be administered.
 
         Args:
-            dosing_strategy (list): list of doses specifying intervals
-                between time and the dose administered.
+            dosing_strategy (list[Dose]): list of Dose objects describing the
+                dosing strategy
         """
         self.dosing_strategy = dosing_strategy
         if not isinstance(dosing_strategy, list):
@@ -21,4 +22,3 @@ class Protocol:
             for dose in dosing_strategy:
                 if not isinstance(dose, Dose):
                     raise TypeError("List must contain Dose or Spiked objects.")
-

@@ -1,27 +1,37 @@
 #
 # Solution class
 #
+from typing import List
 import matplotlib.pylab as plt
 import numpy as np
 import scipy.integrate
 
+from pkmodel.model import Model
+
 
 class Solution:
-    """A Pharmokinetic (PK) model solution
 
-    Parameters
-    ----------
+    def __init__(
+        self,
+        models: List[Model],
+        therapeutic_min: float = None,
+        therapeutic_max: float = None
+    ):
+        """A collection of PK models and methods required to model and plot
+        their behaviour.
 
-    value: numeric, optional
-        an example paramter
-
-    """
-    # def __init__(self, models, protocols, therapeutic_min, therapeutic_max):
-    def __init__(self, models, therapeutic_min, therapeutic_max):
+        :param models: a list of PK models to compare and solve
+        :type models: _type_
+        :param therapeutic_max: the upper limit of the therapeutic window, 
+            defaults to None
+        :type therapeutic_max: float, optional
+        :param therapeutic_min: the lower limit of the therapeutic window, 
+            defaults to None
+        :type therapeutic_min: float, optional
+        """
         self.models = models
         self.therapeutic_min = therapeutic_min
         self.therapeutic_max = therapeutic_max
-        # self.protocols = protocols
         self.solutions = {}
 
     def _dose(self, t, protocol):
@@ -49,7 +59,8 @@ class Solution:
         return [dq0_dt, dqc_dt] + transitions
 
     def solve(self):
-        # pass
+        """Solve the differential equations required to model the systems.
+        """
         t_eval = np.linspace(0, 1, 10000)
 
         for model in self.models:
@@ -70,23 +81,28 @@ class Solution:
             if model.dosing_rate is not None:
                 plt.plot(sol.t, sol.y[0, :], label=model.name + '- q_0')
             plt.plot(sol.t, sol.y[1, :], label=model.name + '- q_c')
-            # plt.plot(sol.t, sol.y[1, :], label=model.name + '- q_p1')
             for i in range(2, sol.y.shape[0]):
                 plt.plot(sol.t, sol.y[i, :], label=model.name + '- q_p{}'.format(i - 1))
             # if np.max(sol.y) > self.therapeutic_max:
-            #     print('Drug concentration of ' + model['name'] + ' exceeds toxic threshold, use lighter dosing')
-        [plt.axhline(y=i, linestyle='--') for i in [self.therapeutic_min, self.therapeutic_max]]
+            #     print('Drug conceJntration of ' + model['name'] + ' exceeds toxic threshold, use lighter dosing')
+        [plt.axhline(y=i, linestyle='--') for i in [self.therapeutic_min, self.therapeutic_max] if i is not None]
         plt.legend()
         plt.ylabel('drug mass [ng]')
         plt.xlabel('time [h]')
         return plt
 
-    # Implement method that plots the solutions via matplotlib
     def plot(self):
+        """Visualise the behaviour of the system on a graph
+        """
         plt = self._make_plot()
         plt.show()
 
-    # Implement method that saves the plots to a specified file path
     def save_plot(self, filepath='pkmodel_plot.png'):
+        """Save the plot in a chosen directory
+
+        :param filepath: filepath of where the plot should be saved, defaults 
+            to 'pkmodel_plot.png'
+        :type filepath: str, optional
+        """
         plt = self._make_plot()
         plt.savefig(filepath)
